@@ -3,11 +3,13 @@
 void printPoints(double x1, double y1, double x2, double y2)
 {
     printf("The points is (%lf,%lf),(%lf,%lf)\n",x1,y1,x2,y2);
+    exit(0);
 }
 
 void printError()
 {
     printf("The line is not in the rectangle window.\n");
+    exit(0);
 }
 
 double max1(double a, double b)
@@ -20,18 +22,32 @@ double max1(double a, double b)
         return b;
     }
 }
+double max2(double a)
+{
+    if(a>0){
+        return a;
+    }else{
+        return 0;
+    }
+
+}
 
 double min1(double a, double b)
 {
     if(a>=1&&b>=1){
         return 0;
-        printf("+a\n");
     }else if(a<=1&&a<=b){
         return a;
-        printf("+b\n");
     }else if(b<=1&&b<=a){
         return b;
-        printf("+c\n");
+    }
+}
+double min2(double a)
+{
+    if(a<1){
+        return a;
+    }else{
+        return 1;
     }
 }
 
@@ -54,6 +70,57 @@ int main()
     q2=xRight-x1;
     q3=y1-yBottom;
     q4=yTop-y1;
+
+    if(deltaX==0){
+       if(q1<0||q2<0){
+            printError();
+       }else{
+            u3=q3/p3;
+            u4=q4/p4;
+            if(p3<0){
+                umax=max2(u3);
+                umin=min2(u4);
+            }else{
+                umax=max2(u4);
+                umin=min2(u3);
+            }
+            if(umax<umin){
+                xPoint1=x1+umax*(x2-x1);
+                yPoint1=y1+umax*(y2-y1);
+                xPoint2=x1+umin*(x2-x1);
+                yPoint2=y1+umin*(y2-y1);
+                printPoints(xPoint1,yPoint1,xPoint2,yPoint2);
+            }else{
+                printError();
+            }
+        }
+    }
+
+    if(deltaY==0){
+        if(q3<0||q4<0){
+            printError();
+        }else{
+            u1=q1/p1;
+            u2=q2/p2;
+            if(p1<0){
+                umax=max2(u1);
+                umin=min2(u2);
+            }else{
+                umax=max2(u2);
+                umin=min2(u1);
+            }
+            if(umax<umin){
+                xPoint1=x1+umax*(x2-x1);
+                yPoint1=y1+umax*(y2-y1);
+                xPoint2=x1+umin*(x2-x1);
+                yPoint2=y1+umin*(y2-y1);
+                printPoints(xPoint1,yPoint1,xPoint2,yPoint2);
+            }else{
+                printError();
+            }
+        }
+
+    }
 
     if(p1!=0&&p2!=0&&p3!=0&&p4!=0){
         u1=q1/p1;
@@ -97,6 +164,4 @@ int main()
             printError();
         }
     }
-
-
 }
